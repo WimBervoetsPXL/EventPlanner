@@ -18,14 +18,14 @@ namespace EventPlanner
     /// </summary>
     public partial class MainWindow : Window
     {
-        struct _eventObject
+        struct EventObject
         {
             public string Name { get; set; }
             public string EventType { get; set; }
             public int Visitors { get; set; }
         }
 
-        List<_eventObject> _events = new List<_eventObject>();
+        List<EventObject> _events = new List<EventObject>();
         List<string> _eventTypes = new List<string>() { "Festival", "Orkest", "Opera" };
 
         public MainWindow()
@@ -48,7 +48,6 @@ namespace EventPlanner
 
         private void OnCreateEventButtonClick(object sender, RoutedEventArgs e)
         {
-            //TODO: validatie
             if (eventTypeComboBox.SelectedIndex == -1)
             {
                 MessageBox.Show("Slecht bezig!");
@@ -68,7 +67,7 @@ namespace EventPlanner
             }
 
 
-            _eventObject newEvent = new _eventObject();
+            EventObject newEvent = new EventObject();
             newEvent.Name = eventNameTextBox.Text;
             newEvent.EventType = eventTypeComboBox.SelectedValue.ToString();
             newEvent.Visitors = int.Parse(eventVisitorsTextBox.Text);
@@ -97,7 +96,7 @@ namespace EventPlanner
         private void OnCreateDefaultEventClick(object sender, RoutedEventArgs e)
         {
     
-            _eventObject newEvent = new _eventObject();
+            EventObject newEvent = new EventObject();
             newEvent.Name = "Jaarlijks optreden";
             newEvent.EventType = "Orkest";
             newEvent.Visitors = 100;
@@ -110,7 +109,7 @@ namespace EventPlanner
         private void ShowEvents()
         {
             eventsListBox.Items.Clear();
-            foreach (_eventObject e in _events)
+            foreach (EventObject e in _events)
             {
                 string eventText = $"{e.EventType} - {e.Name}: {e.Visitors}";
                 eventsListBox.Items.Add(eventText);
