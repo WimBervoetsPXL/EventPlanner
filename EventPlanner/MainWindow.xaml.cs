@@ -18,15 +18,15 @@ namespace EventPlanner
     /// </summary>
     public partial class MainWindow : Window
     {
-        struct _eventObject
+        struct EventObject
         {
-            public string Name { get; set; }
-            public string EventType { get; set; }
-            public int Visitors { get; set; }
+            public string Name;
+            public string EventType;
+            public int Visitors;
         }
 
-        List<_eventObject> _events = new List<_eventObject>();
         List<string> _eventTypes = new List<string>() { "Festival", "Orkest", "Opera" };
+        List<EventObject> _allEvents = new List<EventObject>();
 
         public MainWindow()
         {
@@ -37,83 +37,12 @@ namespace EventPlanner
         {
             eventTypeComboBox.Items.Clear();
 
-            foreach(string et in _eventTypes)
+            foreach(string type in _eventTypes)
             {
-                //ComboBoxItem newItem = new ComboBoxItem();
-                //newItem.Content = et;
-                //eventTypeComboBox.Items.Add(newItem);
-                eventTypeComboBox.Items.Add(et);
-            }
-        }
-
-        private void OnCreateEventButtonClick(object sender, RoutedEventArgs e)
-        {
-            //TODO: validatie
-            if (eventTypeComboBox.SelectedIndex == -1)
-            {
-                MessageBox.Show("Slecht bezig!");
-                return;
-            }
-
-            if(string.IsNullOrEmpty(eventNameTextBox.Text))
-            {
-                MessageBox.Show("Nog altijd slecht bezig");
-                return;
-            }
-
-            if(!int.TryParse(eventVisitorsTextBox.Text, out _))
-            {
-                MessageBox.Show("Even slecht bezig");
-                return;
-            }
-
-
-            _eventObject newEvent = new _eventObject();
-            newEvent.Name = eventNameTextBox.Text;
-            newEvent.EventType = eventTypeComboBox.SelectedValue.ToString();
-            newEvent.Visitors = int.Parse(eventVisitorsTextBox.Text);
-
-            _events.Add(newEvent);
-            ShowEvents();
-        }
-
-        private void OnDeleteEventButtonClick(object sender, RoutedEventArgs e)
-        {
-            if (eventsListBox.SelectedIndex != -1)
-            {
-                _events.RemoveAt(eventsListBox.SelectedIndex);
-
-                ShowEvents();
-            }
-        }
-
-        private void OnDeleteAllEventsClick(object sender, RoutedEventArgs e)
-        {
-            _events.Clear();
-
-            ShowEvents();
-        }
-
-        private void OnCreateDefaultEventClick(object sender, RoutedEventArgs e)
-        {
-    
-            _eventObject newEvent = new _eventObject();
-            newEvent.Name = "Jaarlijks optreden";
-            newEvent.EventType = "Orkest";
-            newEvent.Visitors = 100;
-
-            _events.Add(newEvent);
-
-            ShowEvents();
-        }
-
-        private void ShowEvents()
-        {
-            eventsListBox.Items.Clear();
-            foreach (_eventObject e in _events)
-            {
-                string eventText = $"{e.EventType} - {e.Name}: {e.Visitors}";
-                eventsListBox.Items.Add(eventText);
+                //ComboBoxItem item = new ComboBoxItem();
+                //item.Content = type;
+                //eventTypeComboBox.Items.Add(item);
+                eventTypeComboBox.Items.Add(type);
             }
         }
 
@@ -122,23 +51,79 @@ namespace EventPlanner
             this.Close();
         }
 
+        private void OnCreateEventButtonClick(object sender, RoutedEventArgs e)
+        {
+            //TODO: Validatie
 
+            EventObject newEvent = new EventObject();
+            newEvent.Name = eventNameTextBox.Text;
+            newEvent.EventType = eventTypeComboBox.SelectedValue.ToString();
+            newEvent.Visitors = int.Parse(eventVisitorsTextBox.Text);
+
+            _allEvents.Add(newEvent);
+
+            ShowAllEvents();
+        }
+
+        private void OnDeleteEventButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (eventsListBox.SelectedIndex != -1)
+            {
+                _allEvents.RemoveAt(eventsListBox.SelectedIndex);
+
+                ShowAllEvents();
+            }
+            else
+            {
+                MessageBox.Show("Selecteer eerst een event.");
+            }
+        }
+
+        private void OnDeleteAllEventsClick(object sender, RoutedEventArgs e)
+        {
+            _allEvents.Clear();
+
+            ShowAllEvents();
+        }
+
+        private void OnCreateDefaultEventClick(object sender, RoutedEventArgs e)
+        {
+            EventObject newEvent = new EventObject();
+            newEvent.Name = "Jaarlijks optreden";
+            newEvent.EventType = "Orkest";
+            newEvent.Visitors = 100;
+
+            _allEvents.Add(newEvent);
+
+            ShowAllEvents();
+        }
+
+        private void ShowAllEvents()
+        {
+            eventsListBox.Items.Clear();
+
+            foreach (EventObject e in _allEvents)
+            {
+                string eventDisplay = $"{e.EventType} - {e.Name}: {e.Visitors}";
+                eventsListBox.Items.Add(eventDisplay);
+            }
+        }
     }
 
 
-    public class EventObject
-    {
-        public string Name { get; set; }
-        public string EventType { get; set; }
+    //public class EventObject
+    //{
+    //    public string Name { get; set; }
+    //    public string EventType { get; set; }
 
-        public EventObject(string name, string eventType)
-        {
+    //    public EventObject(string name, string eventType)
+    //    {
             
-        }
+    //    }
 
-        public override string ToString()
-        {
-            return this.Name + " (" + EventType + ")";
-        }
-    }
+    //    public override string ToString()
+    //    {
+    //        return this.Name + " (" + EventType + ")";
+    //    }
+    //}
 }
