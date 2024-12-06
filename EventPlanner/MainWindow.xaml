@@ -1,0 +1,38 @@
+﻿<Window x:Class="EventPlanner.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EventPlanner"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Loaded="OnWindowLoaded">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Events">
+                <MenuItem Header="Verwijder alle events" Click="OnDeleteAllEventsClick"/>
+                <MenuItem Header="Maak standaard event" Click="OnCreateDefaultEventClick"/>
+            </MenuItem>
+            <MenuItem Header="Afsluiten" Click="OnCloseMenuClick"/>
+        </Menu>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Margin="10">
+                <Label Content="Type event:" Margin="10"/>
+                <ComboBox x:Name="eventTypeComboBox" Margin="10"/>
+                <Label Content="Naam event:" Margin="10"/>
+                <TextBox x:Name="eventNameTextBox" Margin="10"/>
+                <Label Content="Aantal bezoekers:" Margin="10"/>
+                <TextBox x:Name="eventVisitorsTextBox" Margin="10"/>
+                <Button Content="Voeg event toe" Click="OnCreateEventButtonClick" Margin="10" Padding="10" HorizontalAlignment="Center"/>
+                <Button Content="Verwijder event" Click="OnDeleteEventButtonClick" Margin="10" Padding="10" HorizontalAlignment="Center"/>
+                
+            </StackPanel>
+            <ListBox Grid.Column="1" Margin="10" x:Name="eventsListBox">
+
+            </ListBox>
+        </Grid>
+    </DockPanel>
+</Window>
